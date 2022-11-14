@@ -51,9 +51,7 @@ namespace For_loop_test
             int Mlocation = 0;
             int Dlocation = 0;
             int counter = 0;
-            string toDivide = "x";
-            string toAdd = "+";
-            string toSubstract = "-";
+
             double Ddouble1 = 0;
             double Ddouble2 = 0;
             double Ddouble3 = 0;
