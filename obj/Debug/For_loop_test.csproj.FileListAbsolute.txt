@@ -6,3 +6,11 @@ C:\Users\User\source\repos\For_loop_test\obj\Debug\For_loop_test.csproj.Suggeste
 C:\Users\User\source\repos\For_loop_test\obj\Debug\For_loop_test.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\For_loop_test\obj\Debug\For_loop_test.exe
 C:\Users\User\source\repos\For_loop_test\obj\Debug\For_loop_test.pdb
+C:\Users\sha_d\Source\Repos\Th4nk-u\calculator\obj\Debug\For_loop_test.csproj.AssemblyReference.cache
+C:\Users\sha_d\Source\Repos\Th4nk-u\calculator\obj\Debug\For_loop_test.csproj.SuggestedBindingRedirects.cache
+C:\Users\sha_d\Source\Repos\Th4nk-u\calculator\obj\Debug\For_loop_test.csproj.CoreCompileInputs.cache
+C:\Users\sha_d\Source\Repos\Th4nk-u\calculator\obj\Debug\For_loop_test.exe
+C:\Users\sha_d\Source\Repos\Th4nk-u\calculator\obj\Debug\For_loop_test.pdb
+C:\Users\sha_d\source\repos\Th4nk-u\calculator\bin\Debug\For_loop_test.exe.config
+C:\Users\sha_d\source\repos\Th4nk-u\calculator\bin\Debug\For_loop_test.exe
+C:\Users\sha_d\source\repos\Th4nk-u\calculator\bin\Debug\For_loop_test.pdb
