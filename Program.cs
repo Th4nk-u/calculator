@@ -29,10 +29,25 @@ namespace For_loop_test
         {
             return value1 / value2;
         }
+        public static bool equationCheck(string equation, bool strEmpty, bool stradd, bool strsub, bool strmul, bool strdiv,)
+        {
+            stradd = equation.Contains("+");
+            strsub = equation.Contains("-");
+            strmul = equation.Contains("*");
+            strdiv = equation.Contains("/");
+            strEmpty = false;
+            if (stradd == false && strsub == false && strmul == false)
+            {
+                return strEmpty = true;
 
-        
+            }
+            else
+            {
+                return strEmpty = false;
+            }
+        }
 
-        static void Main(string[] args)
+    static void Main(string[] args)
         {
             Console.WriteLine("c# calculator foreach concept");
             Console.WriteLine("single type math symbol only");
