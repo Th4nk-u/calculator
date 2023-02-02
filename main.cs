@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace For_loop_test
 {
-    internal class Program
+    internal class main
     {
         public static double AddMethod(double value1, double value2)
         {
@@ -29,25 +30,34 @@ namespace For_loop_test
         {
             return value1 / value2;
         }
-        public static bool equationCheck(string equation, bool strEmpty, bool stradd, bool strsub, bool strmul, bool strdiv,)
+
+
+        static bool equationCheck(string equationV, bool b1, bool b2, bool b3, bool b4, bool strEmpty)
+
         {
-            stradd = equation.Contains("+");
-            strsub = equation.Contains("-");
-            strmul = equation.Contains("*");
-            strdiv = equation.Contains("/");
-            strEmpty = false;
-            if (stradd == false && strsub == false && strmul == false)
+            Console.WriteLine(equationV);
+            b1 = equationV.Contains("+");
+            b2 = equationV.Contains("-");
+            b3 = equationV.Contains("*");
+            b4 = equationV.Contains("/");
+
+            if (b1 == false && b2 == false && b3 == false && b4 == false)
             {
-                return strEmpty = true;
+                Console.WriteLine("only number are left");
+                strEmpty = true;
 
             }
             else
             {
-                return strEmpty = false;
+                strEmpty = false;
+                Console.WriteLine("there 1 or more symbol");
             }
+            return strEmpty;
+
         }
 
-    static void Main(string[] args)
+
+        static void Main(string[] args)
         {
             Console.WriteLine("c# calculator foreach concept");
             Console.WriteLine("single type math symbol only");
@@ -85,6 +95,14 @@ namespace For_loop_test
             bool deliminate = true;
             int MaxOut1 = 1;
             int MaxOut2 = 2;
+
+            //variable for symbol check
+            bool b1 = false;
+            bool b2 = false;
+            bool b3 = false;
+            bool b4 = false;
+            bool strEmpty = true;
+
             List<int> list = new List<int>();
 
 
@@ -110,8 +128,12 @@ namespace For_loop_test
                     while (sequenceL)
                     {
                         chStr = DnumL.ToCharArray();
+                        // symbol check
+                        strEmpty = equationCheck(DnumL, b1, b2, b3, b4, strEmpty);
+                        Console.WriteLine(strEmpty);
 
                         //locator
+
                         foreach (char s in chStr)
                         {
                             Console.WriteLine(s);
@@ -561,7 +583,7 @@ namespace For_loop_test
                         }
                         */
 
-                        if (AnumL.Contains('+'))
+            if (AnumL.Contains('+'))
                         {
                             AnumL = AnumL.Remove(0, (MaxOut2 + 1));
                             Console.WriteLine(AnumL);
