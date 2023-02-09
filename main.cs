@@ -12,11 +12,11 @@ namespace For_loop_test
 {
     internal class main
     {
+        //methods
         public static double AddMethod(double value1, double value2)
         {
             return value1 + value2;
         }
-
         public static double SubtractMethod(double value1, double value2)
         {
             return value1 - value2;
@@ -25,17 +25,13 @@ namespace For_loop_test
         {
             return value1 * value2;
         }
-
         public static double DivideMethod(double value1, double value2)
         {
             return value1 / value2;
         }
-
-
         static bool equationCheck(string equationV, bool b1, bool b2, bool b3, bool b4, bool strEmpty)
 
         {
-            Console.WriteLine(equationV);
             b1 = equationV.Contains("+");
             b2 = equationV.Contains("-");
             b3 = equationV.Contains("*");
@@ -55,7 +51,39 @@ namespace For_loop_test
             return strEmpty;
 
         }
+        static (int, int, int, int) LocationCheck(string strEmpty1)
+        {
+            {
+                char[] chStr = strEmpty1.ToCharArray();
+                int i = 0; int dl = 0; int ml = 0; int al = 0; int sl = 0;
 
+                foreach (char s in chStr)
+                {
+                    //Console.WriteLine(s);
+                    if (s == '/')
+                    {
+                        dl = i;
+                    }
+                    else if (s == '*')
+                    {
+                        ml = i;
+                    }
+
+                    else if (s == '+')
+                    {
+                        al = i;
+                    }
+                    else if (s == '-')
+                    {
+                        sl = i;
+                    }
+                    i++;
+
+                }
+
+                return (dl, ml, al, sl);
+            }
+        }
 
         static void Main(string[] args)
         {
@@ -127,71 +155,31 @@ namespace For_loop_test
                     // removing left side of divide equation
                     while (sequenceL)
                     {
-                        chStr = DnumL.ToCharArray();
                         // symbol check
                         strEmpty = equationCheck(DnumL, b1, b2, b3, b4, strEmpty);
-                        Console.WriteLine(strEmpty);
-
                         //locator
-
-                        foreach (char s in chStr)
-                        {
-                            Console.WriteLine(s);
-                            if (s == '/')
-                            {
-                                Console.Write("divide array location=");
-                                Console.Write(i);
-                                Dlocation = i;
-                                Console.WriteLine(" ");
-                            }
-                            else if (s == '*')
-                            {
-                                Console.Write("multiply array location=");
-                                Console.Write(i);
-                                Mlocation = i;
-                                Console.WriteLine(" ");
-                            }
-
-                            else if (s == '+')
-                            {
-                                Console.Write("add array location=");
-                                Console.Write(i);
-                                Alocation = i;
-                                Console.WriteLine(" ");
-                            }
-                            else if (s == '-')
-                            {
-                                Console.Write("Substract array location=");
-                                Console.Write(i);
-                                Slocation = i;
-                                Console.WriteLine(" ");
-                            }
-                            i++;
-
-                        }
+                        (Dlocation, Mlocation, Alocation, Slocation) = LocationCheck(DnumL);
 
                         while (intro)
                         {
-                            Console.WriteLine("start divide intro left");                            
-                            MaxOut1 = Math.Max(Mlocation, Alocation);
-                            MaxOut2 = Math.Max(MaxOut1, Slocation);                        
-
-                            if (MaxOut2 < 1)
+                            if (strEmpty == false)
                             {
-                                MaxOut1 = 0;
-                                DnumL001 = DnumL;
-                                LeftEmpty = true;
-                            }
-                            else if (MaxOut1 >= 1)
-                            {
+                                MaxOut1 = Math.Max(Mlocation, Alocation);
+                                MaxOut2 = Math.Max(MaxOut1, Slocation);
                                 DnumL001 = DnumL.Remove(MaxOut2 + 1);
+                                DnumL = DnumL.Substring(MaxOut2+1);
+                                Console.WriteLine(DnumL);
                                 Console.WriteLine(DnumL001);
                             }
-                            
+                            else if (strEmpty == true)
+                            {
+                                DnumL001 = DnumL;
+                            }
                             Console.WriteLine(DnumL001);
                             
                             intro = false;
                         }
+                        /*
                         if (DnumL.Contains('*'))
                         {
                             DnumL = DnumL.Remove(0, (MaxOut2 + 1));
@@ -208,7 +196,8 @@ namespace For_loop_test
                         {
                             DnumL = DnumL.Remove(0, (MaxOut2 + 1));
                             Console.WriteLine(DnumL);
-                        }       
+                        }     
+                        */
                         
                         Mlocation = 0;
                         Alocation = 0;
