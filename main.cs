@@ -104,6 +104,7 @@ namespace For_loop_test
             int Mlocation = 0;
             int Dlocation = 0;
             int counter = 0;
+            int caseCount = 1;
 
             double Ddouble1 = 0;
             double Ddouble2 = 0;
@@ -132,13 +133,14 @@ namespace For_loop_test
             bool strEmpty = true;
 
             List<int> list = new List<int>();
-
+            Console.WriteLine("write down math equation");
+            var equation = Console.ReadLine();
+            
 
 
             while (sequence)
             {
-                Console.WriteLine("write down math equation");
-                var equation = Console.ReadLine();
+                
 
                 sequenceL = true; sequenceR = true; sequenceC = true; LeftEmpty = false; RightEmpty = false;
                 Slocation = 0; Alocation = 0; Mlocation = 0; Dlocation = 0;
@@ -179,26 +181,6 @@ namespace For_loop_test
                             
                             intro = false;
                         }
-                        /*
-                        if (DnumL.Contains('*'))
-                        {
-                            DnumL = DnumL.Remove(0, (MaxOut2 + 1));
-                            Console.WriteLine(DnumL);
-                        }
-
-                        else if (DnumL.Contains('+'))
-                        {
-                            DnumL = DnumL.Remove(0, (MaxOut2 + 1));
-                            Console.WriteLine(DnumL);
-                        }
-
-                        else if (DnumL.Contains('-'))
-                        {
-                            DnumL = DnumL.Remove(0, (MaxOut2 + 1));
-                            Console.WriteLine(DnumL);
-                        }     
-                        */
-                        
                         Mlocation = 0;
                         Alocation = 0;
                         Slocation = 0;                        
@@ -250,22 +232,14 @@ namespace For_loop_test
                                 Console.WriteLine(" ");
                                 list.Add(i1);
                             }
-
-
                             i1++;
                             
                         }
                         //checking equation empty
 
-                        if (Mlocation == 0)
+                        if (Mlocation == 0 && Alocation == 0 && Slocation == 0)
                         {
-                            if (Alocation == 0)
-                            {
-                                if (Slocation == 0)
-                                {
-                                    list.Add(0);
-                                }
-                            }
+                            list.Add(0);
                         }
 
                         while (intro)
@@ -274,6 +248,7 @@ namespace For_loop_test
                             Console.WriteLine(DnumR);
                             list.Sort();
                             counter = list[0];
+                            list.RemoveAll(v=> v== i1);
 
                             if (counter < 1)
                             {
@@ -291,43 +266,40 @@ namespace For_loop_test
                             Console.WriteLine(DnumR);
                             intro = false;
                         }
-
+                        Mlocation = 0;
+                        Alocation = 0;
+                        Slocation = 0;
                         sequenceR = false;
                         
                                                 
                     }
 
-                    intro = true;
-
                     while (sequenceC)
                     {
                         Ddouble3 = DivideMethod(Convert.ToDouble(DnumL), Convert.ToDouble(DnumR));
                         Console.WriteLine($"= {Ddouble3}");
-                        if (LeftEmpty == false)
+                        if (strEmpty == false  & RightEmpty == false)
                         {
-                            if (RightEmpty == false)
-                            { 
                                 DnumL002 = string.Concat(DnumL001, Ddouble3, DnumR001); 
-                            }
-                            else if (RightEmpty == true)
-                            {
-                                DnumL002 = string.Concat(DnumL001, Ddouble3);
-                            }
-                            
                         }
-                        else if (LeftEmpty == true)
+                        else if (strEmpty == false && RightEmpty == true)
                         {
-                            if (RightEmpty == true)
-                            {
-                                DnumL002 = Convert.ToString (Ddouble3);
-                                sequence = false;
-                            }
-                            else if (RightEmpty == false)
-                            {
-                                DnumL002 = string.Concat(Ddouble3, DnumR001);
-                                
-                            }
+                            DnumL002 = string.Concat(DnumL001, Ddouble3);
+                        }                            
+                        
+                        else if (strEmpty == true && RightEmpty == true)
+
+                        {
+                            DnumL002 = Convert.ToString (Ddouble3);
+
+                            sequence = false;
                         }
+
+                        else if (strEmpty == true && RightEmpty == false)
+                        {
+                            DnumL002 = string.Concat(Ddouble3, DnumR001);
+                            Console.WriteLine(DnumL002);
+                        }                        
                         equation = DnumL002;
                         //Console.WriteLine(DnumL002);
                         Console.WriteLine("divide finish");
@@ -345,66 +317,40 @@ namespace For_loop_test
                     // removing left side of divide equation
                     while (sequenceL)
                     {
-                        chStr = MnumL.ToCharArray();                        
+                        //chStr = MnumL.ToCharArray();                        
                         Console.WriteLine("multiplication start");
 
+                        // symbol check
+                        strEmpty = equationCheck(MnumL, b1, b2, b3, b4, strEmpty);
                         //locator
-                        foreach (char s in chStr)
-                        {
-                            Console.WriteLine(s);
-
-                           if (s == '+')
-                            {
-                                Console.Write("add array location=");
-                                Console.Write(i);
-                                Alocation = i;
-                                Console.WriteLine(" ");
-                            }
-                            else if (s == '-')
-                            {
-                                Console.Write("Substract array location=");
-                                Console.Write(i);
-                                Slocation = i;
-                                Console.WriteLine(" ");
-                            }
-                            i++;
-
-                        }
+                        (Dlocation, Mlocation, Alocation, Slocation) = LocationCheck(MnumL);
+                        intro = true;
 
                         while (intro)
                         {
-                            Console.WriteLine("split left, multiplication intro");
-                            Console.WriteLine(MnumL);
-                            MaxOut1 = Math.Max(Slocation, Alocation);
-                            Console.WriteLine(MaxOut1);
-                            if (MaxOut1 < 1)
+                            if (strEmpty == false)
+                            {
+                                MaxOut1 = Math.Max(Mlocation, Alocation);
+                                MaxOut2 = Math.Max(MaxOut1, Slocation);
+                                DnumL001 = MnumL.Remove(MaxOut2 + 1);
+                                MnumL = MnumL.Substring(MaxOut2 + 1);
+                                Console.WriteLine(MnumL);
+                                Console.WriteLine(DnumL001);
+                                Console.WriteLine("test for multiply");
+                            }
+                            else if (strEmpty == true)
                             {
                                 DnumL001 = MnumL;
-                                LeftEmpty = true;
                             }
-                            else if (MaxOut1 >= 1)
-                            {
-                                DnumL001 = MnumL.Remove(MaxOut1 + 1);
-                                Console.WriteLine(DnumL001);
-                            }
+                            Console.WriteLine(DnumL001);
                             intro = false;
                         }
-
-
-                        if (MnumL.Contains('+'))
-                        {
-                            MnumL = MnumL.Remove(0, (MaxOut1 + 1));
-                            Console.WriteLine(MnumL);
-                        }
-
-                        else if (MnumL.Contains('-'))
-                        {
-                            MnumL = MnumL.Remove(0, (MaxOut1 + 1));
-                            Console.WriteLine(MnumL);
-                        }                            
+                        Mlocation = 0;
                         Alocation = 0;
                         Slocation = 0;
+                        i1 = 0;
                         sequenceL = false;
+                        
                     }
 
                     //variable reset
@@ -416,13 +362,30 @@ namespace For_loop_test
                         //locator
                         foreach (char s1 in chStr)
                         {
+                            Console.WriteLine(s1);
+                            if (s1 == '/')
+                            {
+                                Console.Write("divide array location=");
+                                Console.Write(i1);
+                                Dlocation = i1;
+                                list.Add(i1);
+                                Console.WriteLine(" ");
+                            }
+                            else if (s1 == '*')
+                            {
+                                Console.Write("multiply array location=");
+                                Console.Write(i1);
+                                Mlocation = i1;
+                                list.Add(i1);
+                                Console.WriteLine(" ");
+                            }
 
-                            if (s1 == '+')
+                            else if (s1 == '+')
                             {
                                 Console.Write("add array location=");
                                 Console.Write(i1);
                                 Alocation = i1;
-                                 Console.WriteLine(" ");
+                                Console.WriteLine(" ");
                                 list.Add(i1);
 
                             }
@@ -434,24 +397,30 @@ namespace For_loop_test
                                 Console.WriteLine(" ");
                                 list.Add(i1);
                             }
+                            Mlocation = 0;
+                            Alocation = 0;
+                            Slocation = 0;
+                            i1 = 0;
                             i1++;
-                        }
 
-                        if (Alocation == 0)
+                        }
+                        //checking equation empty
+
+                        if (Alocation == 0 && Slocation == 0)
                         {
-                            if (Slocation == 0)
-                            {               
-                                list.Add(0);
-                                Console.WriteLine('.');
-                            }
+                            Console.WriteLine("nothing on the Right side");
+                            list.Add(0);
                         }
 
                         while (intro)
                         {
                             Console.WriteLine("Right side equation");
-                            Console.WriteLine(MnumR);
+                            //Console.WriteLine(MnumR);
                             list.Sort();
+                            Console.WriteLine(list);
                             counter = list[0];
+                            list.RemoveAll(v => v == i1);
+
 
                             if (counter < 1)
                             {
@@ -479,36 +448,29 @@ namespace For_loop_test
 
                     while (sequenceC)
                     {
-                        Ddouble1 = Convert.ToDouble(MnumL);
-                        Ddouble2 = Convert.ToDouble(MnumR);
-                        Ddouble3 = Ddouble1 * Ddouble2;
-                        Console.Write("=");
-                        Console.Write(Ddouble1 * Ddouble2);
-                        Console.WriteLine(" ");
-                        if (!LeftEmpty)
+                        Ddouble3 = MultiplyMethod(Convert.ToDouble(MnumL), Convert.ToDouble(MnumR));
+                        Console.WriteLine($"= {Ddouble3}");
+                        if (strEmpty == false & RightEmpty == false)
                         {
-                            if (!RightEmpty)
-                            {
-                                DnumL002 = string.Concat(DnumL001, Ddouble3, DnumR001);
-                            }
-                            else if (RightEmpty)
-                            {
-                                DnumL002 = string.Concat(DnumL001, Ddouble3);
-                            }
-
+                            DnumL002 = string.Concat(DnumL001, Ddouble3, DnumR001);
                         }
-                        else if (LeftEmpty)
+                        else if (strEmpty == false && RightEmpty == true)
                         {
-                            if (RightEmpty)
-                            {
-                                DnumL002 = Convert.ToString(Ddouble3);
-                                sequence = false;
-                            }
-                            else if (!RightEmpty)
-                            {
-                                DnumL002 = string.Concat(Ddouble3, DnumR001);
+                            DnumL002 = string.Concat(DnumL001, Ddouble3);
+                        }
 
-                            }
+                        else if (strEmpty == true && RightEmpty == true)
+
+                        {
+                            DnumL002 = Convert.ToString(Ddouble3);
+
+                            sequence = false;
+                        }
+
+                        else if (strEmpty == true && RightEmpty == false)
+                        {
+                            DnumL002 = string.Concat(Ddouble3, DnumR001);
+                            Console.WriteLine(DnumL002);
                         }
                         Console.WriteLine("multiplication finish");
                         equation = DnumL002;
@@ -517,6 +479,145 @@ namespace For_loop_test
                     }
                 }
 
+                else if (equation.Contains("+"))
+                {
+                    AnumL = equation.Split('+')[0];
+                    AnumR = equation.Split('+')[1];
+
+                    // removing left side of divide equation
+                    while (sequenceL)
+                    {
+                        // symbol check
+                        strEmpty = equationCheck(AnumL, b1, b2, b3, b4, strEmpty);
+                        //locator
+                        (Dlocation, Mlocation, Alocation, Slocation) = LocationCheck(AnumL);
+                        intro = true;
+
+                        while (intro)
+                        {
+                            if (strEmpty == false)
+                            {
+                                MaxOut1 = Math.Max(Mlocation, Alocation);
+                                MaxOut2 = Math.Max(MaxOut1, Slocation);
+                                DnumL001 = AnumL.Remove(MaxOut2 + 1);
+                                AnumL = AnumL.Substring(MaxOut2 + 1);
+                                Console.WriteLine(AnumL);
+                                Console.WriteLine(DnumL001);
+                                Console.WriteLine("test for multiply");
+                            }
+                            else if (strEmpty == true)
+                            {
+                                DnumL001 = AnumL;
+                            }
+                            Console.WriteLine(DnumL001);
+                            intro = false;
+                        }
+                        sequenceL = false;
+                    }
+
+                    //variable reset
+                    intro = true;
+
+                    while (sequenceR)
+                    {
+                        chStr = AnumR.ToCharArray();
+                        //locator
+                        foreach (char s1 in chStr)
+                        {
+
+                            if (s1 == '+')
+                            {
+                                Console.Write("add array location=");
+                                Console.Write(i1);
+                                Alocation = i1;
+                                Console.WriteLine(" ");
+                                list.Add(i1);
+
+                            }
+                            else if (s1 == '-')
+                            {
+                                Console.Write("Substract array location=");
+                                Console.Write(i1);
+                                Slocation = i1;
+                                Console.WriteLine(" ");
+                                list.Add(i1);
+                            }
+                            i1++;
+                        }
+
+                        if (Alocation == 0)
+                        {
+                            if (Slocation == 0)
+                            {
+                                list.Add(0);
+                                Console.WriteLine('.');
+                            }
+                        }
+
+                        while (intro)
+                        {
+                            Console.WriteLine("Right side equation");
+                            Console.WriteLine(AnumR);
+                            list.Sort();
+                            counter = list[0];
+                            list.RemoveAll(v => v == i1);
+
+                            if (counter < 1)
+                            {
+                                DnumR001 = AnumR;
+                                RightEmpty = true;
+                            }
+                            else if (counter >= 1)
+                            {
+                                DnumR001 = AnumR.Remove(0, counter);
+                                AnumR = AnumR.Remove(counter);
+                                RightEmpty = false;
+                            }
+                            Console.WriteLine(DnumR001);
+                            Console.WriteLine(AnumR);
+                            intro = false;
+                        }
+
+                        sequenceR = false;
+
+
+                    }
+
+                    intro = true;
+
+                    while (sequenceC)
+                    {
+                        Ddouble3 = AddMethod(Convert.ToDouble(AnumL), Convert.ToDouble(AnumR));
+                        Console.WriteLine($"= {Ddouble3}");
+                        if (strEmpty == false & RightEmpty == false)
+                        {
+                            DnumL002 = string.Concat(DnumL001, Ddouble3, DnumR001);
+                        }
+                        else if (strEmpty == false && RightEmpty == true)
+                        {
+                            DnumL002 = string.Concat(DnumL001, Ddouble3);
+                        }
+
+                        else if (strEmpty == true && RightEmpty == true)
+
+                        {
+                            DnumL002 = Convert.ToString(Ddouble3);
+
+                            sequence = false;
+                        }
+
+                        else if (strEmpty == true && RightEmpty == false)
+                        {
+                            DnumL002 = string.Concat(Ddouble3, DnumR001);
+                            Console.WriteLine(DnumL002);
+                        }
+                        Console.WriteLine("addition finish");
+                        equation = DnumL002;
+                        sequenceC = false;
+
+                    }
+                }
+                /*
                 else if (equation.Contains("+"))
                 {
                     AnumL = equation.Split('+')[0];
@@ -570,7 +671,7 @@ namespace For_loop_test
                             MnumL = MnumL.Remove(0, (MaxOut2 + 1));
                             Console.WriteLineMDnumL);
                         }
-                        */
+                        
 
             if (AnumL.Contains('+'))
                         {
@@ -872,7 +973,7 @@ namespace For_loop_test
                         sequence = false;
                     }
                 }
-
+                */
             }
             Console.ReadKey ();
         }
