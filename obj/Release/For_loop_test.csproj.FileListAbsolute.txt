@@ -1,0 +1,8 @@
+C:\Users\User\source\project_calculator\bin\Release\For_loop_test.exe.config
+C:\Users\User\source\project_calculator\bin\Release\For_loop_test.exe
+C:\Users\User\source\project_calculator\bin\Release\For_loop_test.pdb
+C:\Users\User\source\project_calculator\obj\Release\For_loop_test.csproj.AssemblyReference.cache
+C:\Users\User\source\project_calculator\obj\Release\For_loop_test.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\source\project_calculator\obj\Release\For_loop_test.csproj.CoreCompileInputs.cache
+C:\Users\User\source\project_calculator\obj\Release\For_loop_test.exe
+C:\Users\User\source\project_calculator\obj\Release\For_loop_test.pdb
