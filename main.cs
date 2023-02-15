@@ -289,7 +289,8 @@ namespace pj1
                         list.Clear();
                         RightSide = false;
                     }
-
+                    Console.WriteLine(ModValueL);
+                    Console.WriteLine(ModValueR);
                     LowAnswer = AddMethod(ModValueL, ModValueR);
 
                     equationV = numTransfer(LowAnswer, equationV, SymbolTrueL, SymbolTrueR, ModValueL1, ModValueR1);
