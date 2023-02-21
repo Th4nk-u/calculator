@@ -21,54 +21,6 @@ namespace pj1
             }
         }
 
-        //symbol location checker 
-        static (int, int, int, int) LocationCheck(string strEmpty1)
-
-        {
-            char[] chStr = strEmpty1.ToCharArray();
-            int i = 0; int dl = 0; int ml = 0; int al = 0; int sl = 0;
-
-            foreach (char s in chStr)
-            {
-                //Console.WriteLine(s);
-                if (s == '/')
-                {
-                    dl = i;
-                }
-                else if (s == '*')
-                {
-                    ml = i;
-                }
-
-                else if (s == '+')
-                {
-                    al = i;
-                }
-                else if (s == '-')
-                {
-                    sl = i;
-                }
-                i++;
-
-            }
-
-            return (dl, ml, al, sl);
-        }
-
-        //symbol sort
-        static List<int> SymbolSorter(string equationV)
-        {
-            var (dlM, mlM, alM, slM) = LocationCheck(equationV);
-            List<int> list = new List<int>();
-
-            list.Add(dlM);
-            list.Add(mlM);
-            list.Add(alM);
-            list.Add(slM);
-            list.Sort();
-            return (list);
-        }
-
         //check for other symbols
         static bool SymbolCheck(string equationV)
         {
@@ -89,6 +41,39 @@ namespace pj1
             }
             return anySymbol;
 
+        }
+
+
+        //symbol sort
+        static List<int> SymbolSorter(string equationV)
+        {
+            char[] chStr = equationV.ToCharArray();
+            List<int> list = new List<int>();
+            int i = 0;
+            foreach (char s in chStr)
+            {
+                //Console.WriteLine(s);
+                if (s == '/')
+                {
+                    list.Add(i);
+                }
+                else if (s == '*')
+                {
+                    list.Add(i);
+                }
+
+                else if (s == '+')
+                {
+                    list.Add(i);
+                }
+                else if (s == '-')
+                {
+                    list.Add(i);
+                }
+                i++;
+
+            }
+            return (list);
         }
 
         static string numTransfer(double LowAnswer, string equationV, bool SymbolTrueL, bool SymbolTrueR, string ModValueL1, string ModValueR1)
@@ -168,8 +153,9 @@ namespace pj1
                         if (SymbolTrueL == true)
                         {
                             list = SymbolSorter(Lvalue);
-                            ModValueL = Lvalue.Substring(list[3] + 1);
-                            ModValueL1 = Lvalue.Remove(list[3] + 1);
+                            list.Reverse();
+                            ModValueL = Lvalue.Substring(list[0] + 1);
+                            ModValueL1 = Lvalue.Remove(list[0] + 1);
                         }
                         else if (SymbolTrueL == false)
                         {
@@ -185,8 +171,9 @@ namespace pj1
                         if (SymbolTrueR == true)
                         {
                             list = SymbolSorter(Rvalue);
-                            ModValueR = Rvalue.Remove(list[0] + 1);
-                            ModValueR1 = Rvalue.Substring(list[0]+1);
+                            list.Sort();
+                            ModValueR1 = Rvalue.Substring(list[0]);
+                            ModValueR = Rvalue.Remove(list[0]);
                         }
                         else if (SymbolTrueR == false)
                         {
@@ -195,9 +182,7 @@ namespace pj1
                         list.Clear();
                         RightSide = false;
                     }
-
                     LowAnswer = DivideMethod(ModValueL, ModValueR);
-
                     equationV = numTransfer(LowAnswer, equationV, SymbolTrueL, SymbolTrueR, ModValueL1, ModValueR1);
                     Console.WriteLine(equationV);
                 }
@@ -215,8 +200,9 @@ namespace pj1
                         if (SymbolTrueL == true)
                         {
                             list = SymbolSorter(Lvalue);
-                            ModValueL = Lvalue.Substring(list[3] + 1);
-                            ModValueL1 = Lvalue.Remove(list[3] + 1);
+                            list.Reverse();
+                            ModValueL = Lvalue.Substring(list[0] + 1);
+                            ModValueL1 = Lvalue.Remove(list[0] + 1);
                         }
                         else if (SymbolTrueL == false)
                         {
@@ -232,8 +218,9 @@ namespace pj1
                         if (SymbolTrueR == true)
                         {
                             list = SymbolSorter(Rvalue);
-                            ModValueR = Rvalue.Remove(list[0] + 1);
-                            ModValueR1 = Rvalue.Substring(list[0] + 1);
+                            list.Sort();
+                            ModValueR1 = Rvalue.Substring(list[0]);
+                            ModValueR = Rvalue.Remove(list[0]);
                         }
                         else if (SymbolTrueR == false)
                         {
@@ -247,7 +234,7 @@ namespace pj1
 
                     equationV = numTransfer(LowAnswer, equationV, SymbolTrueL, SymbolTrueR, ModValueL1, ModValueR1);
                     Console.WriteLine(equationV);
-                }
+                } 
 
                 else if (equationV.Contains("+"))
                 {
@@ -262,8 +249,9 @@ namespace pj1
                         if (SymbolTrueL == true)
                         {
                             list = SymbolSorter(Lvalue);
-                            ModValueL = Lvalue.Substring(list[3] + 1);
-                            ModValueL1 = Lvalue.Remove(list[3] + 1);
+                            list.Reverse();
+                            ModValueL = Lvalue.Substring(list[0] + 1);
+                            ModValueL1 = Lvalue.Remove(list[0] + 1);
                         }
                         else if (SymbolTrueL == false)
                         {
@@ -279,8 +267,9 @@ namespace pj1
                         if (SymbolTrueR == true)
                         {
                             list = SymbolSorter(Rvalue);
-                            ModValueR = Rvalue.Remove(list[0] + 1);
-                            ModValueR1 = Rvalue.Substring(list[0]+1);
+                            list.Sort();
+                            ModValueR1 = Rvalue.Substring(list[0]);
+                            ModValueR = Rvalue.Remove(list[0]);
                         }
                         else if (SymbolTrueR == false)
                         {
@@ -289,8 +278,6 @@ namespace pj1
                         list.Clear();
                         RightSide = false;
                     }
-                    Console.WriteLine(ModValueL);
-                    Console.WriteLine(ModValueR);
                     LowAnswer = AddMethod(ModValueL, ModValueR);
 
                     equationV = numTransfer(LowAnswer, equationV, SymbolTrueL, SymbolTrueR, ModValueL1, ModValueR1);
@@ -310,8 +297,9 @@ namespace pj1
                         if (SymbolTrueL == true)
                         {
                             list = SymbolSorter(Lvalue);
-                            ModValueL = Lvalue.Substring(list[3] + 1);
-                            ModValueL1 = Lvalue.Remove(list[3] + 1);
+                            list.Reverse();
+                            ModValueL = Lvalue.Substring(list[0] + 1);
+                            ModValueL1 = Lvalue.Remove(list[0] + 1);
                         }
                         else if (SymbolTrueL == false)
                         {
@@ -327,8 +315,9 @@ namespace pj1
                         if (SymbolTrueR == true)
                         {
                             list = SymbolSorter(Rvalue);
-                            ModValueR = Rvalue.Remove(list[0] + 1);
-                            ModValueR1 = Rvalue.Substring(list[0]+1);
+                            list.Sort();
+                            ModValueR1 = Rvalue.Substring(list[0]);
+                            ModValueR = Rvalue.Remove(list[0]);
                         }
                         else if (SymbolTrueR == false)
                         {
